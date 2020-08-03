@@ -41,6 +41,8 @@ ggplot(data = midwest, aes(x = poptotal, y = popasian)) +
 install.packages("dplyr")
 library(dplyr)
 
+mpg <- as.data.frame(ggplot2::mpg)
+
 '  집단별 평균표 만들기  '
 df_mpg <- mpg %>% 
   group_by(drv) %>% 
@@ -53,6 +55,35 @@ ggplot(data = df_mpg, aes(x = drv, y = mean_hwy)) + geom_col()
 
 '  크기 순으로 정렬하기  '
 ggplot(data = df_mpg, aes(x = reorder(drv, -mean_hwy), y = mean_hwy)) + geom_col()
+
+'  빈도 막대 그래프 만들기  '
+ggplot(data = mpg, aes(x = drv)) + geom_bar()
+
+ggplot(data = mpg, aes(x = hwy)) + geom_bar()
+
+#------------ 실습 ------------#
+'
+Q1. 어떤 회사에서 생산한 "suv" 차종의 도시 연비가 높은지 알아보려고 합니다.
+  "suv"차종을 대상으로 평균 cty(도시 연비)가 가장 높은 회사 다섯 곳을 막대 그래프로 표현해 보세요.
+  막대는 연비가 높은 순으로 정렬하세요.
+'
+mpg %>% head()
+
+df_mpg <- mpg %>% 
+  filter(class == "suv") %>% 
+  group_by(manufacturer) %>% 
+  summarise(cty_mean = mean(cty)) %>% 
+  arrange(desc(cty_mean)) %>% 
+  head(5)
+
+
+ggplot(data = df_mpg, aes(x = reorder(manufacturer, -cty_mean), y = cty_mean)) + geom_col()
+
+
+'
+Q2. 자동차 중에서 어떤 class(자동차 종류)가 가장 많은지 알아보려고 합니다.
+  자동차 종류별 빈도를 표현한 막대 그래프를 만들어 보세요.
+'
 #------------ 선 그래프 - 시간에 따라 달라지는 데이터 표현하기 ------------#
 
 
