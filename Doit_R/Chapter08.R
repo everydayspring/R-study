@@ -84,6 +84,7 @@ ggplot(data = df_mpg, aes(x = reorder(manufacturer, -cty_mean), y = cty_mean)) +
 Q2. 자동차 중에서 어떤 class(자동차 종류)가 가장 많은지 알아보려고 합니다.
   자동차 종류별 빈도를 표현한 막대 그래프를 만들어 보세요.
 '
+ggplot(data = mpg, aes(x=class))+geom_bar()
 #------------ 선 그래프 - 시간에 따라 달라지는 데이터 표현하기 ------------#
 
 
